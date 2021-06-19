@@ -9,8 +9,6 @@ import com.fransoufil.comercial.domain.Categoria;
 import com.fransoufil.comercial.repositories.CategoriaRepository;
 import com.fransoufil.comercial.services.exceptions.ObjectNotFoundException;
 
-import net.bytebuddy.implementation.bytecode.Throw;
-
 @Service
 public class CategoriaService {
 	

@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.fransoufil.comercial.domain.Categoria;
 import com.fransoufil.comercial.domain.Cidade;
+import com.fransoufil.comercial.domain.Cliente;
+import com.fransoufil.comercial.domain.Endereco;
 import com.fransoufil.comercial.domain.Estado;
 import com.fransoufil.comercial.domain.Produto;
+import com.fransoufil.comercial.domain.enums.TipoCliente;
 import com.fransoufil.comercial.repositories.CategoriaRepository;
 import com.fransoufil.comercial.repositories.CidadeRepository;
+import com.fransoufil.comercial.repositories.ClienteRepository;
+import com.fransoufil.comercial.repositories.EnderecoRepository;
 import com.fransoufil.comercial.repositories.EstadoRepository;
 import com.fransoufil.comercial.repositories.ProdutoRepository;
 
@@ -30,6 +35,12 @@ public class ComercialBackApplication implements CommandLineRunner{
 
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ComercialBackApplication.class, args);
@@ -66,6 +77,27 @@ public class ComercialBackApplication implements CommandLineRunner{
 
 				estadoRepository.saveAll(Arrays.asList(est1, est2));
 				cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+				
+				Cliente cli1 = new Cliente(null, "Francisco Souza", "francisco@souza", "3333333366", TipoCliente.PESSOAFISICA);
+				Cliente cli2 = new Cliente(null, "Felipe Souza", "felipe@souza", "55566677788", TipoCliente.PESSOAJURIDICA);
+				Cliente cli3 = new Cliente(null, "Claudia Cristina", "claudia@cristina", "66677788899", TipoCliente.PESSOAFISICA);
+				
+				cli1.getTelefones().addAll(Arrays.asList("33335555", "977778888"));
+				cli2.getTelefones().addAll(Arrays.asList("977889933"));
+				cli3.getTelefones().addAll(Arrays.asList("66778833", "955778822"));
+				
+				Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 777", "Jardim", "33330077", cli1, c1);
+				Endereco e2 = new Endereco(null, "Rua Madeira", "88", "Apto 333", "Vila", "77889955", cli1, c3);
+				Endereco e3 = new Endereco(null, "Rua Nuvem", "23", "Apto 17", "Aliança", "22445566", cli2, c2);
+				Endereco e4 = new Endereco(null, "Rua Jandira", "15", null, "Alameda", "55336666", cli3, c3);
+				
+				cli1.getEndereco().addAll(Arrays.asList(e1, e2));
+				cli2.getEndereco().addAll(Arrays.asList(e3));
+				cli3.getEndereco().addAll(Arrays.asList(e4));
+				
+				clienteRepository.saveAll(Arrays.asList(cli1, cli2, cli3));
+				
+				enderecoRepository.saveAll(Arrays.asList(e1, e2, e3, e4));
 		
 	}
 
